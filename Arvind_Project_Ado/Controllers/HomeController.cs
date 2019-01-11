@@ -5,6 +5,7 @@ using System.Web;
 using Arvind_Project_Ado.Models;
 using System.Data.SqlClient;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace Arvind_Project_Ado.Controllers
 {
@@ -12,7 +13,8 @@ namespace Arvind_Project_Ado.Controllers
     {
         public ActionResult Index()
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\727834\source\repos\Arvind_Project_Ado\Arvind_Project_Ado\App_Data\Items.mdf;Integrated Security=True");
+            string connectionstring = ConfigurationManager.ConnectionStrings["Constring"].ConnectionString;
+            SqlConnection connection = new SqlConnection(connectionstring);
 
             connection.Open();
             SqlCommand command = new SqlCommand("SELECT * from Items", connection);
@@ -39,8 +41,8 @@ namespace Arvind_Project_Ado.Controllers
         public ActionResult Delete(ItemModel itemModel)
         {
             String query = "Delete from Items where Id=" + itemModel.Id;
-            string constr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\727834\source\repos\Arvind_Project_Ado\Arvind_Project_Ado\App_Data\Items.mdf;Integrated Security=True";
-            using (SqlConnection con = new SqlConnection(constr))
+            string connectionstring = ConfigurationManager.ConnectionStrings["Constring"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionstring))
             {
                 con.Open();
                 using (SqlCommand command = new SqlCommand(query, con))
@@ -56,8 +58,8 @@ namespace Arvind_Project_Ado.Controllers
         public ActionResult SearchItem(DateTime d1, DateTime d2)
 
         {
-
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\727834\source\repos\Arvind_Project_Ado\Arvind_Project_Ado\App_Data\Items.mdf;Integrated Security=True");
+            string connectionstring = ConfigurationManager.ConnectionStrings["Constring"].ConnectionString;
+            SqlConnection connection = new SqlConnection(connectionstring);
             connection.Open();
             string temp = d1.ToShortDateString();
             string temp1 = d2.ToShortDateString();
