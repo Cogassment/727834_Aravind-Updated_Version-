@@ -13,67 +13,70 @@
     <title>Records</title>
 </head>
 <body>
-    <br />
-    <h2>Records</h2>
-    <br />
-    <div style="float:right">
-        From:
-        <input type="date" id="from" value="" />
+        <br />
+        <h2>Records</h2>
+        <br />
+        <div style="float:right">
+            From:
+            <input type="date" id="from" value="" />
 
-        To:
-        <input type="date" id="to" value="" />
+            To:
+            <input type="date" id="to" value="" />
 
 
-        <center><input id="Submit1" type="submit" value="Submit" /></center>
-        <script>
-            let today = new Date().toISOString().substr(0, 10);
-            document.querySelector("#from").value = today;
-            document.querySelector("#to").value = today;
-        </script>
-    </div>
-    <br />
-    <br />
-    <br />
+            <center><input id="Submit1" type="submit" value="Submit" /></center>
+            <script>
+                let today = new Date().toISOString().substr(0, 10);
+                document.querySelector("#from").value = today;
+                document.querySelector("#to").value = today;
+            </script>
+        </div>
+        <br />
+        <br />
+        <br />
 
-    <table id="tblItems" class="table" border="1">
-        <thead>
-            <tr>
-                <th>Customer Id</th>
-                <th>Name</th>
-                <th>  Date  </th>
-                <th>Operation</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-
+        <table id="tblItems" class="table" border="1">
+            <thead>
                 <tr>
+                    <th>Customer Id</th>
+                    <th>Name</th>
+                    <th>  Date  </th>
+                    <th>Operation</th>
 
-                    <td class="Id">
-                        <span>@item.Id</span>
-                    </td>
-                    <td class="Name">
-                        <span>@item.Name</span>
-                        <input type="text" value="@item.Name" style="display:none" />
-                    </td>
-                    <td class="Date">
-                        <span>@item.DateFormat</span>
-                        <input type="text" value="@item.DateFormat" style="display:none" />
-
-                    </td>
-                    <td>
-                        <a id="btnDelete" type="button" value="Delete" class="Delete btn btn-primary">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            <span> Delete</span>
-                        </a>
-                    </td>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
 
+                    <tr>
+
+                        <td class="Id">
+                            <span>@item.Id</span>
+                        </td>
+                        <td class="Name">
+                            <span>@item.Name</span>
+                            <input type="text" value="@item.Name" style="display:none" />
+                        </td>
+                        <td class="Date">
+                            <span>@item.DateFormat</span>
+                            <input type="text" value="@item.DateFormat" style="display:none" />
+
+                        </td>
+                        <td>
+                            <a id="btnDelete" type="button" value="Delete" class="Delete btn btn-primary">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                <span> Delete</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    <a id="btnBack" type="button" value="Back" class="Back btn btn-primary" style="display:none">
+        <span class="glyphicon glyphicon-backward"></span>
+        <span> Back </span>
+    </a>
 
 
 
@@ -138,6 +141,7 @@
                         var norec = '<tr><td colspan="4"><center> <font size="3" >No Records Found </font></center></td></tr >';
                         $('#tblItems tbody').append(norec);
                     }
+                    $('#btnBack').show();
                 },
                 error: function () {
                     alert('Please Enter a Valid Date');
@@ -154,6 +158,11 @@
                 newDate = month + '/' + day + '/' + yr;
             return newDate;
         }
+
+        $("body").on("click", "#btnBack", function () {
+            $('#btnBack').hide();
+            window.location.href = "@Url.Action("Index", "Home")";
+        });
     </script>
 </body>
 </html>
